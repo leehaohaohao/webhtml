@@ -5,77 +5,69 @@
 		<title>时期界面</title>
 		<style type="text/css">
 			body,html{
-                width:1920px;
-                height: 935px;
-				background-image: url("img/mainImage.jpg");
+                width:100%;
+                height: 100%;
+				background-image: url("img/开始背景.png");
                 background-repeat: no-repeat;
                 background-size: 100% 100%;
                 margin: 0;
 			}
-            .yuanGu{
+            .mainDiv{
+                position: relative;
+                width: 100%;
+                height: 100%;
+            }
+            .circle{
                 width:300px;
                 height: 300px;
-                /*border: 1px solid red;*/
                 border-radius: 50%;
                 position: absolute;
-                top:100px;
-                left:500px;
+                background-size: cover;
+                transition: transform 0.3s ease;
+            }
+            .circle:hover{
+                transform: scale(1.1);
+            }
+            .yuanGu{
+                top:10%;
+                left:20%;
                 background-image: url("img/原古时期.png");
-                background-size: 100% 100%;
             }/*原始时期*/
             .xiaShangZhou{
-                width:300px;
-                height: 300px;
-                /*border: 1px solid red;*/
-                border-radius: 50%;
-                position: absolute;
-                top:100px;
-                right:500px;
+                top:10%;
+                right:20%;
                 background-image: url("img/夏商周时期.png");
-                background-size: 100% 100%;
             }/*夏商周时期*/
             .qinHan{
-                width:300px;
-                height: 300px;
-                /*border: 1px solid red;*/
-                border-radius: 50%;
-                position: absolute;
-                top:600px;
-                left:500px;
+                bottom:10%;
+                left:20%;
                 background-image: url("img/秦汉时期.png");
-                background-size: 100% 100%;
             }/*秦汉时期*/
             .songYuan{
-                width:300px;
-                height: 300px;
-                /*border: 1px solid red;*/
-                border-radius: 50%;
-                position: absolute;
-                top:600px;
-                right:500px;
+                bottom:10%;
+                right:20%;
                 background-image: url("img/宋元时期.png");
-                background-size: 100% 100%;
             }/*宋元时期*/
             .mingQing{
-                width:300px;
-                height: 300px;
-                /*border: 1px solid red;*/
-                border-radius: 50%;
-                position: absolute;
-                top:350px;
-                left:790px;
+                top:50%;
+                left:50%;
+                transform: translate(-50%, -50%);
                 background-image: url("img/明清时期.png");
-                background-size: 100% 100%;
             }/*明清时期*/
+            .mingQing:hover{
+                transform: translate(-50%, -50%) scale(1.1);
+            }
 		</style>
+        <script type="text/javascript">
+        </script>
 	</head>
 	<body>
 		<div class="mainDiv">
-            <div class="yuanGu"></div>
-            <div class="xiaShangZhou"></div>
-            <div class="songYuan"></div>
-            <div class="qinHan"></div>
-            <div class="mingQing"></div>
+            <a href="https://www.baidu.com"><div class="circle yuanGu"></div></a>
+            <a href="https://www.baidu.com"><div class="circle xiaShangZhou"></div></a>
+            <a href="https://www.baidu.com"><div class="circle songYuan"></div></a>
+            <a href="https://www.baidu.com"><div class="circle qinHan"></div></a>
+            <a href="https://www.baidu.com"><div class="circle mingQing"></div></a>
         </div>
 	</body>
 </html>
