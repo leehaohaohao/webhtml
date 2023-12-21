@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>时期界面</title>
+        <style type="text/css">
+            body,
+            html {
+                width: 100%;
+                height: 100%;
+                background-image: url("img/开始背景.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin: 0;
+            }
+
+            .mainDiv {
+                position: relative;
+                width: 1200px;
+                height: 100%;
+                margin: 0;
+            }
+
+            .circle {
+                width: 300px;
+                height: 300px;
+                border-radius: 50%;
+                position: absolute;
+                background-size: 100% 100%;
+                /* 初始位置在屏幕左边 */
+                left: -300px;
+                transition: transform 0.3s ease;
+            }
+            
+            .circle:hover {
+                transform: scale(1.1);
+            }
+
+            /* 添加关键帧动画 */
+            .yuanGu {
+                
+                top: 10%;
+                left: 10%;
+                background-image: url("img/原古时期.png");
+                animation: slideInYuanGu 2s ease-out forwards;
+            }
+            @keyframes slideInYuanGu {
+                0% {
+                    left: -300px;
+                }
+            
+                100% {
+                    left: 10%;
+                }
+            }
+            .xiaShangZhou {
+                
+                bottom: 10%;
+                left: 30%;
+                background-image: url("img/夏商周时期.png");
+                animation: slideInXiaShangZhou 2s ease-out forwards;
+            }
+            @keyframes slideInXiaShangZhou {
+                0% {
+                    left: -300px;
+                }
+            
+                100% {
+                    left: 30%;
+                }
+            }
+            .qinHan {
+                
+                top: 10%;
+                left: 50%;
+                background-image: url("img/秦汉时期.png");
+                animation: slideInQinHan 2s ease-out forwards;
+            }
+            @keyframes slideInQinHan {
+                0% {
+                    left: -300px;
+                }
+            
+                100% {
+                    left: 50%;
+                }
+            }
+            .songYuan {
+                
+                bottom: 10%;
+                left: 70%;
+                background-image: url("img/宋元时期.png");
+                animation: slideInSongYuan 2s ease-out forwards;
+            }
+            @keyframes slideInSongYuan {
+                0% {
+                    left: -300px;
+                }
+            
+                100% {
+                    left: 70%;
+                }
+            }
+            .mingQing {
+                
+                top: 10%;
+                left: 90%;
+                background-image: url("img/明清时期.png");
+                animation: slideInMingQing 2s ease-out forwards;
+            }
+            @keyframes slideInMingQing {
+                0% {
+                    left: -300px;
+                }
+            
+                100% {
+                    left: 90%;
+                }
+            }
+            .xianDai {
+                
+                bottom: 10%;
+                left: 110%;
+                background-image: url("img/现代时期.png");
+                animation: slideInXianDai 2s ease-out forwards;
+            }
+            @keyframes slideInXianDai {
+                0% {
+                    left: -300px;
+                }
+            
+                100% {
+                    left: 110%;
+                }
+            }
+
+            /* 添加花瓣样式 */
+            .petal {
+                position: fixed;
+                top: -40px;
+                
+                width: 25px;
+                height: 30px;
+                background-image: url("img/花瓣.png");
+                background-size: cover;
+                animation: fall linear infinite;
+            }
+
+            @keyframes fall {
+                0% {
+                    transform: translateX(calc(100vw * Math.random())) translateY(-10%);
+                }
+
+                100% {
+                    transform: translateX(calc(100vw * Math.random())) translateY(110%);
+                }
+            }
+        </style>
+        <script type="text/javascript">
+            /* 添加 JavaScript 代码来随机改变花瓣的大小和下落速度 */
+            // 创建一个数组来存储所有的花瓣元素
+            var petals = [];
+            var petalCount = 0;
+
+            function createPetal() {
+                if (petals.length >= 200) {
+                    var removedPetal = petals.shift();
+                    document.body.removeChild(removedPetal);
+                }
+                var petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.left = Math.random() * window.innerWidth + 'px';
+                petal.id = 'petal' + petalCount++;
+                document.body.appendChild(petal);
+                petals.push(petal);
+
+                fallPetal(petal);
+            }
+
+            function fallPetal(petal) {
+                var speed = 2;
+                var rotateSpeed = Math.random() > 0.5 ? 1 : -1; // 随机选择旋转方向
+                var fallingInterval = setInterval(function() {
+                    petal.style.top = petal.offsetTop + 1 + 'px';
+                    petal.style.transform = 'rotate(' + petal.offsetTop * rotateSpeed + 'deg)';
+                    if (petal.offsetTop >= 2000) {
+                        clearInterval(fallingInterval);
+                    }
+                }, speed);
+            }
+
+            setInterval(createPetal, 500);
+
+        </script>
+    </head>
+    <body>
+        <div class="mainDiv">
+            <a href="ageInfo.html">
+                <div class="circle yuanGu"></div>
+            </a>
+            <a href="ageInfo.html">
+                <div class="circle xiaShangZhou"></div>
+            </a>
+            <a href="ageInfo.html">
+                <div class="circle songYuan"></div>
+            </a>
+            <a href="ageInfo.html">
+                <div class="circle qinHan"></div>
+            </a>
+            <a href="ageInfo.html">
+                <div class="circle mingQing"></div>
+            </a>
+            <a href="ageInfo.html">
+                <div class="circle xianDai"></div>
+            </a>
+            <!-- 添加花瓣元素 -->
+            <div class="petal"></div>
+            <div class="petal"></div>
+        </div>
+    </body>
+</html>

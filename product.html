@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .slider, .button {
+            margin: 20px;
+        }
+
+        #model {
+            width: 200px;
+            height: 200px;
+            background: url('img/瓷盘.png'); /* 这里需要替换为你的瓷器模型图片的URL */
+            transition: transform 0.1s linear;
+        }
+
+        #nextStep {
+            display: none;
+            border: 1px solid black;
+            padding: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="model"></div>
+        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        <button class="button" onclick="startFiring()">开始烧窑</button>
+        <p id="progress">进度：0%</p>
+        <div id="nextStep">
+            <p>下一步的操作介绍...</p>
+            <button onclick="nextStep()">下一步</button>
+        </div>
+    </div>
+
+    <script>
+        var slider = document.getElementById("myRange");
+        var model = document.getElementById("model");
+        var progress = document.getElementById("progress");
+        var nextStep = document.getElementById("nextStep");
+        var firing = false;
+
+        slider.oninput = function() {
+            var angle = this.value * 3.6;
+            model.style.transform = 'rotate(' + angle + 'deg)';
+        }
+
+        function startFiring() {
+            firing = true;
+            progress.innerHTML = "进度：0%";
+            fire();
+        }
+
+        function fire() {
+            if (!firing) return;
+            var value = parseInt(progress.innerHTML.split('：')[1]);
+            if (value < 100) {
+                progress.innerHTML = "进度：" + (value + 1) + "%";
+                setTimeout(fire, 100);
+            } else {
+                firing = false;
+                nextStep.style.display = "block";
+            }
+        }
+
+        function nextStep() {
+            alert("开始下一步操作！");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                background-image: url("img/背景图.png");
+                background-size: 100% 100%;
+                min-width: 1000px;
+                min-height: 300px;
+            }
+
+            .container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 800px;
+            }
+
+            .box {
+                position: relative;
+                top: -800px;
+                width: 270px;
+                height: 400px;
+                margin: 20px;
+                overflow: hidden;
+                border-radius: 20px;
+                animation: drop 1s ease-out forwards;
+                /* 添加这一行 */
+            }
+
+            .image {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-size: auto 100%;
+                background-position: center;
+                transition: width 0.5s linear;
+            }
+
+            .image1 {
+                background-image: url("img/瓷器制作.png");
+                width: 90%;
+                z-index: 2;
+            }
+
+            .image2 {
+                background-image: url("img/瓷器制作info.png");
+                width: 10%;
+                right: 0;
+                z-index: 1;
+            }
+
+            .image3 {
+                background-image: url("img/背景文化.png");
+                width: 90%;
+                z-index: 2;
+            }
+
+            .image4 {
+                background-image: url("img/背景文化info.png");
+                width: 10%;
+                right: 0;
+                z-index: 1;
+            }
+
+            .image5 {
+                background-image: url("img/知识问答.png");
+                width: 90%;
+                z-index: 2;
+            }
+
+            .image6 {
+                background-image: url("img/知识问答info.png");
+                width: 10%;
+                right: 0;
+                z-index: 1;
+            }
+
+            .box:hover .image1 {
+                width: 10%;
+            }
+
+            .box:hover .image2 {
+                width: 90%;
+            }
+
+            .box:hover .image3 {
+                width: 10%;
+            }
+
+            .box:hover .image4 {
+                width: 90%;
+            }
+
+            .box:hover .image5 {
+                width: 10%;
+            }
+
+            .box:hover .image6 {
+                width: 90%;
+            }
+
+            .side-image {
+                position: fixed;
+                top: 50%;
+                width: 150px;
+                height: 280px;
+                transform: translateY(-50%);
+                background-size: 100% 100%;
+                animation: slide-in 1.5s ease-out forwards;
+            }
+
+            .left {
+                left: -150px;
+                background-image: url("img/left.png");
+                animation-name: slide-in-left;
+            }
+
+            .right {
+                right: -150px;
+                background-image: url("img/right.png");
+                animation-name: slide-in-right;
+            }
+
+            @keyframes slide-in-left {
+                0% {
+                    left: -150px;
+                }
+
+                50% {
+                    left: 0;
+                }
+
+                75% {
+                    left: -50px;
+                }
+
+                100% {
+                    left: 0;
+                }
+            }
+
+            @keyframes slide-in-right {
+                0% {
+                    right: -150px;
+                }
+
+                50% {
+                    right: 0;
+                }
+
+                75% {
+                    right: -50px;
+                }
+
+                100% {
+                    right: 0;
+                }
+            }
+
+            /* 新添加的代码 */
+            @keyframes drop {
+                0% {
+                    top: -800px;
+                }
+
+                100% {
+                    top: 0;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="box" style="animation-delay: 0s;"> <!-- 添加这一行 -->
+                <a href="product.html"> <!-- 添加这一行 -->
+                    <div class="image image1"></div>
+                    <div class="image image2"></div>
+                </a> <!-- 添加这一行 -->
+            </div>
+            <div class="box" style="animation-delay: 0.5s;"> <!-- 添加这一行 -->
+                <a href="ageInfo.html"> <!-- 添加这一行 -->
+                    <div class="image image3"></div>
+                    <div class="image image4"></div>
+                </a> <!-- 添加这一行 -->
+            </div>
+            <div class="box" style="animation-delay: 1s;"> <!-- 添加这一行 -->
+                <a href="index-1.html"> <!-- 添加这一行 -->
+                    <div class="image image5"></div>
+                    <div class="image image6"></div>
+                </a> <!-- 添加这一行 -->
+            </div>
+        </div>
+
+        <div class="side-image left"></div>
+        <div class="side-image right"></div>
+    </body>
+</html>
