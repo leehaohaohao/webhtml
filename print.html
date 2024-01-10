@@ -5,7 +5,7 @@
         <style>
             body {
                 user-select: none;
-                background-image: url("img/背景图.png");
+                background-image: url("img/backgroundimage.png");
                 background-repeat: no-repeat;
                 background-size: cover;
                 min-width: 1000px;
@@ -81,14 +81,14 @@
             .left {
                 left: 0;
                 z-index: 1;
-                background: url('img/左边窗帘.png') no-repeat;
+                background: url('img/vv.png') no-repeat;
                 background-size: 100% 100%;
             }
 
             .right {
                 right: 0px;
                 z-index: 1;
-                background: url('img/右边窗帘.png') no-repeat;
+                background: url('img/nn.png') no-repeat;
                 background-size: 150% 100%;
             }
 
@@ -136,14 +136,14 @@
     </head>
     <body>
         <div id="overlay">
-            <img src="img/彩绘.png">
+            <img src="img/print.png">
         </div> <!-- 新增的元素 -->
         <div class="half left"></div>
         <div class="half right"></div>
-        <img id="pot" src="img/未上色瓷器.png">
-        <img id="brush" src="img/刷子.png" draggable="true"> <!-- 新增的元素 -->
+        <img id="pot" src="img/kk.png">
+        <img id="brush" src="img/jj.png" draggable="true"> <!-- 新增的元素 -->
         <div id="nextPage">
-            <img src="img/彩绘介绍版.png"> <!-- 这里需要替换为你的图片的URL -->
+            <img src="img/printinfo.png"> <!-- 这里需要替换为你的图片的URL -->
         </div>
         <!-- 你可以在这里添加你的其他元素 -->
     </body>
@@ -194,7 +194,7 @@
                     if (!timeoutId) {
                         timeoutId = setTimeout(function() {
                             pot.fadeOut(1000, function() {
-                                pot.attr('src', 'img/上色瓷器.png'); // 这里需要替换为你的新图片的URL
+                                pot.attr('src', 'img/ee.png'); // 这里需要替换为你的新图片的URL
                                 pot.fadeIn(1000, function() {
                                     $('#nextPage').css('display', 'block'); // 先显示下一页的链接
                                     $('#nextPage').animate({
