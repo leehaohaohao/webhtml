@@ -1,231 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>瓷器鉴赏</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            text-decoration: none;
-        }
-
-        body,
-        html {
-            width: 100%;
-            height: 100%;
-            background-color: beige;
-            position: relative;
-            background-position: top;
-            display: flex;
-        }
-
-        #banner {
-            width: 800px;
-            height: 938px;
-            overflow: hidden;
-            border: 2px solid #999;
-            position: relative;
-        }
-
-        #banner img {
-            width: 800px;
-            height: 938px;
-        }
-
-        #imglist {
-            width: 4000px;
-            height: 400px;
-        }
-
-        #imglist li {
-            float: left;
-        }
-
-        #icolist {
-            position: absolute;
-            left: 40%;
-            bottom: 10px;
-        }
-
-        #icolist li {
-            float: left;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #515bc7;
-            color: #fff;
-            margin-left: 5px;
-            text-align: center;
-            line-height: 30px;
-            cursor: pointer;
-        }
-
-        .prev {
-            height: 40px;
-            width: 30px;
-            position: absolute;
-            left: 5px;
-            top: 45%;
-            color: #306ee8;
-            font-size: 50px;
-            ;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .next {
-            height: 40px;
-            width: 30px;
-            position: absolute;
-            right: 5px;
-            top: 45%;
-            color: #306ee8;
-            font-size: 50px;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        h1 {
-            text-align: center;
-            font-size: 80px;
-            color: rgb(30, 89, 207)
-        }
-
-        p {
-            font-size: 40px;
-            color: rgb(101, 111, 123);
-            text-indent: 2em;
-        }
-
-        #image {
-            width: 100%;
-            height: 100%;
-        }
-    </style>
-</head>
-
-<body>
-    <div id="banner">
-        <ul id="imglist">
-            <li><img src="img/瓷器1.png"></li>
-            <li><img src="img/02.jpg"></li>
-            <li><img src="img/03.jpg"></li>
-            <li><img src="img/04.jpg"></li>
-            <li><img src="img/瓷器1.png"></li>
-        </ul>
-        <ul id="icolist">
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-        </ul>
-        <div class="prev">《</div>
-        <div class="next">》</div>
-    </div>
-    <div>
-        <h1>瓷器介绍</h1>
-        <p id="intro">介绍1</p>
-
-    </div>
-    <script>
-        var esico = document.getElementById('icolist').getElementsByTagName('li');
-        var eicolist = document.querySelector('#icolist');
-        var eimglist = document.querySelector('#imglist');
-        var etest = document.querySelector('#test');
-        var eprev = document.querySelector('.prev');
-        var enext = document.querySelector('.next');
-        var intro = document.getElementById("intro")
-        var left = 0;
-        var timer;
-        run();
-        function run() {
-            if (left <= -3200) {
-                left = 0;
-            }
-            var m = Math.floor(-left / 800);
-            imglist.style.marginLeft = left + 'px';
-            var n = (left % 800 == 0) ? n = 5000 : n = 6;
-            left -= 10;
-            icochange(m);
-            updatetxt(m);
-            timer = setTimeout(run, n);
-        }
-
-        function icochange(m) {
-            for (let index = 0; index < esico.length; index++) {
-                esico[index].style.backgroundColor = '';
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>瓷器鉴赏</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                text-decoration: none;
             }
 
-            if (m < esico.length) {
-                esico[m].style.backgroundColor = 'grey';
+            body,
+            html {
+                width: 100%;
+                height: 100%;
+                background-image: url("img/背景图.png");
+                background-size: 100% 100%;
+                position: relative;
+                background-position: top;
+                display: flex;
             }
 
-        }
-
-        function imgchange(n) {
-            let lt = - (n * 800)
-            imglist.style.marginLeft = lt + 'px';
-            left = lt;
-        }
-
-        eprev.onclick = function () {
-            let prevgo = Math.floor(-left / 800) - 1;
-            if (prevgo == -1) {
-                prevgo = 3;
+            #banner {
+                width: 300px;
+                height: 400px;
+                overflow: hidden;
+                top: 30%;
+                left: 30%;
+                /* border: 2px solid #999; */
+                position: relative;
+                margin-left: 50px;
             }
-            imgchange(prevgo);
-            icochange(prevgo);
-            updatetxt(prevgo);
-        }
 
-        enext.onclick = function () {
-            let nextgo = Math.floor(-left / 800) + 1;
-            if (nextgo == 4) {
-                nextgo = 0;
+            #banner img {
+                width: 300px;
+                height: 400px;
             }
-            imgchange(nextgo);
-            icochange(nextgo);
-            updatetxt(nextgo);
-        }
 
-        eicolist.onclick = function () {
-            var tg = event.target;
-            let ico = tg.innerHTML - 1;
-            imgchange(ico);
-            icochange(ico);
-        }
+            #imglist {
+                width: 1500px;
+                display: flex;
+                position: relative;
+            }
 
-        eimglist.onmouseover = function () {
-            clearTimeout(timer);
-        }
+            /* #imglist li {
+            float: left; 
+        } */
 
+            #icolist {
+                position: absolute;
+                left: 30%;
+                bottom: 10px;
+            }
 
-        eimglist.onmouseout = function () {
-            run();
-        }
-        function updatetxt(m) {
-            if (m == 0) {
-                intro.innerText = ""
-                intro.innerText = "1"
+            #icolist li {
+                float: left;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                background: #156197;
+                color: #fff;
+                margin-left: 5px;
+                text-align: center;
+                line-height: 30px;
+                cursor: pointer;
             }
-            if (m == 1) {
-                intro.innerText = ""
-                intro.innerText = "2"
+
+            .prev {
+                /* height: 300px;
+            width: 150px; */
+                position: absolute;
+                left: 17%;
+                top: 30%;
+                cursor: pointer;
             }
-            if (m == 2) {
-                intro.innerText = ""
-                intro.innerText = "3"
+
+            .next {
+                /* height: 300px;
+            width: 150px; */
+                position: absolute;
+                right: 17%;
+                top: 30%;
+                cursor: pointer;
             }
-            if (m == 3) {
-                intro.innerText = ""
-                intro.innerText = "4"
+
+            h1 {
+                text-align: center;
+                font-size: 80px;
+                color: rgb(33, 77, 165)
             }
-        }
-    </script>
-</body>
+
+            p {
+                font-size: 22px;
+                color: rgb(101, 111, 123);
+                text-indent: 2em;
+            }
+
+            #image {
+                width: 100%;
+                height: 100%;
+            }
+
+            #int {
+                text-align: center;
+                font-size: 50px;
+                color: rgb(63, 108, 198)
+            }
+
+            .next-page {
+                position: fixed;
+                right: 20px;
+                bottom: 20px;
+            }
+
+            .next-page img {
+                border-radius: 50%;
+                width: 200px;
+                height: 200px;
+                transition: transform 0.3s;
+            }
+
+            .next-page img:hover {
+                transform: scale(1.2);
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="banner">
+
+            <ul id="imglist">
+                <li><img src="img/瓷器1.png"></li>
+                <li><img src="img/瓷器2.png"></li>
+                <li><img src="img/瓷器3.png"></li>
+                <li><img src="img/瓷器4.png"></li>
+                <li><img src="img/瓷器1.png"></li>
+            </ul>
+            <ul id="icolist">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+            </ul>
+        </div>
+        <div><img class="prev" src="img/left.png"></div>
+        <div><img src="img/right.png" class="next"></div>
+        <div id="banner">
+            <img class="ex" src="img/瓷器介绍1.png">
+        </div>
+        <div class="next-page">
+            <a href="play.html">
+                <img src="img/返回.png" alt="下一页">
+            </a>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var esico = $('#icolist li');
+                var eimglist = $('#imglist');
+                var eprev = $('.prev');
+                var enext = $('.next');
+                var eex = $(".ex");
+                var left = 0;
+                var timer;
+                var imgs = eimglist.children().length;
+                var isFirst = true;
+                var isSwipering = false;
+                var nowImgIndex = 0;
+
+                icochange(0);
+
+                function run_next() {
+                    var n = isFirst ? 0 : 6;
+                    left -= 10;
+                    eimglist.css('left', left + 'px');
+                    if ((-left % 300) == 0) {
+                        if (nowImgIndex == imgs - 2) {
+                            nowImgIndex = 0
+                            left = 0
+                            eimglist.css('left', 0 + 'px');
+                        } else {
+                            nowImgIndex++
+                        }
+                        isFirst = true
+                        isSwipering = false
+                        icochange(nowImgIndex);
+                        updatetxt(nowImgIndex);
+                    } else {
+                        isFirst = false
+                        timer = setTimeout(run_next, n);
+                    }
+                }
+
+                function run_prev() {
+                    if (left == 0) {
+                        left = (imgs - 1) * 300 * (-1)
+                        eimglist.css('left', left + 'px');
+                        left += 10
+                    } else {
+                        left += 10;
+                        eimglist.css('left', left + 'px');
+                    }
+
+                    var n = isFirst ? 0 : 6;
+                    if ((left % 300) == 0) {
+                        if (nowImgIndex == 0) {
+                            nowImgIndex = imgs - 2
+                        } else {
+                            nowImgIndex--
+                        }
+                        isFirst = true
+                        isSwipering = false
+                        icochange(nowImgIndex);
+                        updatetxt(nowImgIndex);
+                    } else {
+                        isFirst = false
+                        timer = setTimeout(run_prev, n);
+                    }
+                }
+
+                function icochange(m) {
+                    for (let index = 0; index < esico.length; index++) {
+                        $(esico[index]).css('backgroundColor', '');
+                    }
+
+                    if (m < esico.length) {
+                        $(esico[m]).css('backgroundColor', 'grey');
+                    }
+                }
+
+                function imgchange(n) {
+                    let lt = -(n * 300)
+                    imglist.css('marginLeft', lt + 'px');
+                    left = lt;
+                }
+
+                eprev.click(function() {
+                    if (isSwipering) return
+                    isSwipering = true
+                    let prevgo = Math.floor(-left / 300) - 1;
+                    run_prev()
+                    updatetxt(prevgo);
+                });
+
+                enext.click(function() {
+                    if (isSwipering) return
+                    isSwipering = true
+                    let nextgo = Math.floor(-left / 300) + 1;
+                    run_next()
+                    updatetxt(nextgo);
+                });
+
+                $('#icolist').click(function() {
+                    var tg = event.target;
+                    let ico = tg.innerHTML - 1;
+                    run_next()
+                    updatetxt(ico);
+                });
+
+                function updatetxt(m) {
+                    if (m == 0) {
+                        eex.attr('src', "img/瓷器介绍1.png");
+                    }
+                    if (m == 1) {
+                        eex.attr('src', "img/瓷器介绍2.png");
+                    }
+                    if (m == 2) {
+                        eex.attr('src', "img/瓷器介绍3.png");
+                    }
+                    if (m == 3) {
+                        eex.attr('src', "img/瓷器介绍4.png");
+                    }
+                }
+            });
+        </script>
+    </body>
 
 </html>

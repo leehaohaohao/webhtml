@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>玩法</title>
         <style>
             body {
                 background-image: url("img/背景图.png");
-                background-size: 100% 100%;
+                background-size: cover;
                 min-width: 1000px;
                 min-height: 300px;
             }
-
             .container {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 height: 800px;
             }
-
             .box {
                 position: relative;
                 top: -800px;
@@ -27,7 +26,6 @@
                 animation: drop 1s ease-out forwards;
                 /* 添加这一行 */
             }
-
             .image {
                 position: absolute;
                 width: 100%;
@@ -36,70 +34,57 @@
                 background-position: center;
                 transition: width 0.5s linear;
             }
-
             .image1 {
                 background-image: url("img/瓷器制作.png");
                 width: 90%;
                 z-index: 2;
             }
-
             .image2 {
                 background-image: url("img/瓷器制作info.png");
                 width: 10%;
                 right: 0;
                 z-index: 1;
             }
-
             .image3 {
                 background-image: url("img/背景文化.png");
                 width: 90%;
                 z-index: 2;
             }
-
             .image4 {
                 background-image: url("img/背景文化info.png");
                 width: 10%;
                 right: 0;
                 z-index: 1;
             }
-
             .image5 {
                 background-image: url("img/知识问答.png");
                 width: 90%;
                 z-index: 2;
             }
-
             .image6 {
                 background-image: url("img/知识问答info.png");
                 width: 10%;
                 right: 0;
                 z-index: 1;
             }
-
             .box:hover .image1 {
                 width: 10%;
             }
-
             .box:hover .image2 {
                 width: 90%;
             }
-
             .box:hover .image3 {
                 width: 10%;
             }
-
             .box:hover .image4 {
                 width: 90%;
             }
-
             .box:hover .image5 {
                 width: 10%;
             }
-
             .box:hover .image6 {
                 width: 90%;
             }
-
             .side-image {
                 position: fixed;
                 top: 50%;
@@ -173,7 +158,7 @@
     <body>
         <div class="container">
             <div class="box" style="animation-delay: 0s;"> <!-- 添加这一行 -->
-                <a href="product.html"> <!-- 添加这一行 -->
+                <a href="productInfo.html"> <!-- 添加这一行 -->
                     <div class="image image1"></div>
                     <div class="image image2"></div>
                 </a> <!-- 添加这一行 -->
@@ -185,7 +170,7 @@
                 </a> <!-- 添加这一行 -->
             </div>
             <div class="box" style="animation-delay: 1s;"> <!-- 添加这一行 -->
-                <a href="index-1.html"> <!-- 添加这一行 -->
+                <a href="index-4.html"> <!-- 添加这一行 -->
                     <div class="image image5"></div>
                     <div class="image image6"></div>
                 </a> <!-- 添加这一行 -->

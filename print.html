@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>彩绘</title>
+        <style>
+            body {
+                user-select: none;
+                background-image: url("img/背景图.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                min-width: 1000px;
+                min-height: 300px;
+            }
+
+            #pot {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 400px;
+                height: 400px;
+                transform: translate(-50%, -50%);
+                /* 这里需要替换为你的未上色瓷器图片的URL */
+                transition: transform 0.3s ease;
+                /* 添加过渡效果 */
+            }
+
+            #pot:hover {
+                transform: translate(-50%, -50%) scale(1.1);
+                /* 鼠标悬浮时放大 */
+            }
+
+            #brush {
+                position: absolute;
+                top: 50%;
+                left: 80%;
+                /* 将刷子放在罐子的右边 */
+                cursor: move;
+                /* 把鼠标光标改为移动形状 */
+                width: 100px;
+                /* 新增的代码 */
+                /* 这里需要替换为你的刷子图片的URL */
+            }
+
+            #nextPage {
+                display: none;
+                /* 初始时隐藏覆盖层 */
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                /* 添加暗淡的效果 */
+                z-index: 9999;
+                /* 设置层级 */
+                transition: opacity 1s;
+                opacity: 0;
+                /* 添加过渡效果 */
+            }
+
+            #nextPage img {
+                position: absolute;
+                border-radius: 150px;
+                top: 50%;
+                left: 50%;
+                width: 600px;
+                height: 800px;
+                transform: translate(-50%, -50%);
+                cursor: pointer;
+                /* 把鼠标光标改为指针形状 */
+                /* 这里需要替换为你的图片的URL */
+            }
+
+            .half {
+                position: fixed;
+                width: 50%;
+                height: 100%;
+                transition: all 2s ease-out;
+            }
+
+            .left {
+                left: 0;
+                z-index: 1;
+                background: url('img/左边窗帘.png') no-repeat;
+                background-size: 100% 100%;
+            }
+
+            .right {
+                right: 0px;
+                z-index: 1;
+                background: url('img/右边窗帘.png') no-repeat;
+                background-size: 150% 100%;
+            }
+
+            body.loaded .left {
+                transform: translateX(-100%);
+            }
+
+            body.loaded .right {
+                transform: translateX(100%);
+            }
+
+            #overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                /* 添加暗淡的效果 */
+                z-index: 9999;
+                /* 设置层级 */
+                transition: opacity 1s;
+                /* 添加过渡效果 */
+            }
+
+            #overlay img {
+                position: absolute;
+                width: 600px;
+                height: 800px;
+                border-radius: 150px;
+                top: 50%;
+                left: 50%;
+                transform: translate3d(-50%, -50%, 0);
+                  animation: slideInFromTop 2s ease-out;
+            }
+            @keyframes slideInFromTop {
+              0% {
+                transform: translate3d(-50%, -100%, 0);
+              }
+              100% {
+                transform: translate3d(-50%, -50%, 0);
+              }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="overlay">
+            <img src="img/彩绘.png">
+        </div> <!-- 新增的元素 -->
+        <div class="half left"></div>
+        <div class="half right"></div>
+        <img id="pot" src="img/未上色瓷器.png">
+        <img id="brush" src="img/刷子.png" draggable="true"> <!-- 新增的元素 -->
+        <div id="nextPage">
+            <img src="img/彩绘介绍版.png"> <!-- 这里需要替换为你的图片的URL -->
+        </div>
+        <!-- 你可以在这里添加你的其他元素 -->
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $('#overlay').click(function() {
+            $(this).css('opacity', '0'); // 让覆盖层渐渐变为透明
+        });
+        $('#overlay').on('transitionend', function() {
+            if ($(this).css('opacity') == '0') {
+                $(this).hide(); // 当覆盖层完全透明后，隐藏覆盖层
+                $('body').addClass('loaded'); // 开始执行开屏动画
+            }
+        });
+        var isMouseDown = false;
+        var brush = $('#brush');
+        var pot = $('#pot'); // 获取瓷器元素
+        var nextPage = $('#nextPage'); // 获取覆盖层元素
+        var body = $('body');
+        var brushWidth = brush.width();
+        var brushHeight = brush.height();
+        var originalTop = brush.offset().top;
+        var originalLeft = brush.offset().left;
+        var timeoutId; // 用于存储setTimeout返回的ID
+        
+        brush.on('mousedown', function(e) {
+            e.preventDefault();
+            isMouseDown = true;
+        });
+        
+        body.on('mousemove', function(e) {
+            if (!isMouseDown) return;
+            requestAnimationFrame(function() {
+                var x = Math.max(0, Math.min($(window).width() - brushWidth, e.pageX - brushWidth / 2));
+                var y = Math.max(0, Math.min($(window).height() - brushHeight, e.pageY - brushHeight / 2));
+                brush.css({
+                    left: x + 'px',
+                    top: y + 'px'
+                });
+        
+                // 检查刷子是否在瓷器上
+                var potOffset = pot.offset();
+                var potWidth = pot.width();
+                var potHeight = pot.height();
+                if (x + brushWidth / 2 >= potOffset.left && x + brushWidth / 2 <= potOffset.left + potWidth &&
+                    y + brushHeight / 2 >= potOffset.top && y + brushHeight / 2 <= potOffset.top + potHeight) {
+                    // 如果刷子在瓷器上，那么在3秒后更换瓷器的图片
+                    if (!timeoutId) {
+                        timeoutId = setTimeout(function() {
+                            pot.fadeOut(1000, function() {
+                                pot.attr('src', 'img/上色瓷器.png'); // 这里需要替换为你的新图片的URL
+                                pot.fadeIn(1000, function() {
+                                    $('#nextPage').css('display', 'block'); // 先显示下一页的链接
+                                    $('#nextPage').animate({
+                                        opacity: 1
+                                    }, 1000); // 然后让下一页的链接渐显
+                                });
+                            });
+                            timeoutId = null;
+                        }, 3000);
+                    }
+                } else {
+                    // 如果刷子不在瓷器上，那么清除定时器
+                    clearTimeout(timeoutId);
+                    timeoutId = null;
+                }
+            });
+        });
+        
+        body.on('mouseup', function() {
+            isMouseDown = false;
+            brush.animate({
+                top: originalTop,
+                left: originalLeft
+            }, 500); // 当松开鼠标时，让刷子回到原位
+        });
+        
+        // 当用户点击新界面上的图片时，跳转到下一页
+        $('#nextPage img').click(function() {
+            $('#nextPage').animate({opacity: 0}, 1500, function() {
+                        $(this).css('display', 'none');
+                         window.location.href = 'play.html';
+                    });
+           
+        });
+        
+
+    </script>
+</html>

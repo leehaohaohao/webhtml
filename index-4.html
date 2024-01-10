@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>答题界面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            background-size: 100% 100%;
+            background-image: url("img/背景图.png");
+            position: relative;
+            display: flex;
+        }
+
+        #parent-container {
+            display: flex;
+            /* position: absolute; */
+            /* left: 30%; */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        #question {
+            margin-bottom: 40px;
+            font-size: 50px;
+        }
+
+        #answer {
+            margin-bottom: 40px;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        button {
+            left: 15%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            color: rgb(6, 74, 129);
+            background: linear-gradient(#7ca5c0, #509cc8);
+            border-style: none;
+            width: 100px;
+            height: 100px;
+            border-radius: 100vh;
+            margin: 20px;
+            box-shadow: 0px 6px 10px 2px lightgray;
+            text-decoration: none;
+            transition: 0.5s;
+        }
+
+        button:hover {
+            background: linear-gradient(#b0ba8d, #bbbd86);
+            color: antiquewhite;
+            scale: 0.9;
+            box-shadow: 0 0 10px 2px gray;
+        }
+
+        .exdiv {
+            width: 50%;
+        }
+
+        #nextBtn {
+            display: none;
+            left: 60%;
+        }
+
+        h3 {
+            font-size: 50px;
+            color: #4983d0;
+        }
+
+        p {
+            font-size: 25px;
+            margin-left: 2em;
+            color: rgb(45, 90, 139);
+        }
+
+        /* .eximg{
+            width: 300px;
+            height:400px;
+        } */
+        .radio-button {
+            width: 20px;
+            height: 20px;
+        }
+
+        #sl {
+            display: none;
+            position: absolute;
+            top: 35%;
+            left: 25%;
+            width: 900px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .next-page {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+        }
+
+        .next-page img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            transition: transform 0.3s;
+        }
+
+        .next-page img:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="parent-container">
+        <div id="question">
+            <h3>问题1:</h3>
+            <p style="font-weight: bold;"> 中国素有“瓷器王国之称”，（ ）被誉为“东方艺术的精华”</p>
+        </div>
+        <div id="answer">
+            <label>
+                <input type="radio" name="option" value="a" class="radio-button"> a) 德化白瓷
+            </label><br>
+            <label>
+                <input type="radio" name="option" value="b" class="radio-button"> b) 醴陵釉下彩瓷
+            </label><br>
+            <label>
+                <input type="radio" name="option" value="c" class="radio-button"> c) 景德镇瓷器
+            </label><br>
+            <label>
+                <input type="radio" name="option" value="d" class="radio-button"> d) 宜兴紫砂瓷
+            </label><br>
+        </div>
+        <!-- <div class="next-page">
+            <a href="play.html">
+                <img src="img/下一步.png" alt="下一页">
+            </a >
+        </div> -->
+    </div>
+    <button class="next-page" style="left: 45%;top: 70%;" id="submit" onclick="checkAnswer()"><img
+            src="img/下一步.png"></button>
+
+    <div id="sl">
+        <div id="result" style="display: none"></div>
+        <div id="explanation" style="display: none"></div>
+    </div>
+    <button class="next-page" style="left: 45%;top: 70%;" id="nextBtn" onclick="nextQuestion()"
+        class="button-style"><img src="img/下一步.png"></button>
+    <script>
+        var questions = [
+            {
+                question: "中国素有“瓷器王国之称”，（ ）被誉为“东方艺术的精华”",
+                correctAnswer: "b",
+                explanation: '醴陵釉下五彩瓷从清代创烧至今，仅仅一百多年的历史，却在国外大展上屡屡获奖，闻名世界，被誉为”东方陶瓷艺术的高峰”<br>醴陵釉下五彩瓷的多种复色材料，以多层次的色阶展现出强烈的艺术表现力和感染力，将传统的绘画艺术呈现在瓷器上，表现出清雅、温润、素洁之美，赢得中外人士的一致赞誉。<br>'
+            },
+            {
+                question: "宋代五大名窑是汝窑、官窑、（）、钧窑、定窑",
+                correctAnswer: "c",
+                explanation: '“哥窑”名列宋代五大名窑，在陶瓷史上有举足轻重的地位。<br>哥窑胎多紫黑色、铁黑色、也有黄褐色。釉为失透的乳浊釉，釉面泛一层酥光，釉色以炒米黄、灰青多见，釉面大小纹片结合。<br>经染色后大纹片呈深褐色，小纹片为黄褐色，也称‘金丝铁线’“墨纹梅花片”“叶脉纹”‘文武片’等。<br>这是传世哥窑的主要特征之一。器形有各式瓶、炉、尊、洗及碗、盆、碟等。多见仿古造型，底足制作不十分规整，釉面常见缩釉和棕眼。'
+            },
+            {
+                question: "（）是世界上出口瓷器最早的国家，素有“瓷国”的美誉",
+                correctAnswer: "a",
+                explanation: '在唐朝中期以前，中国对外主通道是陆上丝绸之路，之后由于战乱及经济重心转移等原因，海上丝绸之路取代陆路成为中外贸易交流主通道。<br>这条航线全长1.4万千米，是当时世界上最长的远洋航线，途经100多个国家和地区。<br>在宋元时期是范围覆盖大半个地球的人类历史活动和东西方文化经济交流的重要载体。<br>海上通道在隋唐时运送的主要大宗货物仍是丝绸，所以后世把这条连接东西方的海道叫作海上丝绸之路。<br>到了宋元时期，瓷器出口渐成为主要货物，因此又称作“海上陶瓷之路”。'
+            },
+            {
+                question: "以下哪种瓷器被誉为“白瓷之母”",
+                correctAnswer: "c",
+                explanation: '德化白瓷的胎骨细柔坚致，俗称“糯米胎”，<br>带有晶莹的光泽，釉水洁净匀厚与胎骨结合紧密浑然一体，呈色温润如玉，剔透光滑，器体在光线照耀下，可映见指影，叩之声音清悦悠扬，犹如敲击金属，铿然作响。<br>其美妙的胎釉质感直逼玉器之“五德”，它的问世，引起瓷坛的巨大反响，国内鉴赏家称赞“似定器无开片，若乳白之滑腻，宛如象牙光色，如绢细水莹厚”。'
+            },
+        ];
+        var answers = [
+            {
+                a: "德化白瓷",
+                b: "醴陵釉下彩瓷",
+                c: "景德镇瓷器",
+                d: "宜兴紫砂瓷"
+            },
+            {
+                a: "越窑",
+                b: "磁州窑",
+                c: "哥窑",
+                d: "吉窑"
+            },
+            {
+                a: "中国",
+                b: "日本",
+                c: "韩国",
+                d: "朝鲜"
+            },
+            {
+                a: "定窑白瓷",
+                b: "钧窑白瓷",
+                c: "德化白瓷",
+                d: "白胎青花"
+            },
+        ];
+        var currentQuestion = 0;
+
+        function checkAnswer() {
+            var selectedOption = document.querySelector('input[name="option"]:checked');
+            if (selectedOption) {
+                var userAnswer = selectedOption.value;
+                if (userAnswer === questions[currentQuestion].correctAnswer) {
+                    document.getElementById("result").innerHTML = "<p>正确答案是" + questions[currentQuestion].correctAnswer + "</p>";
+                } else {
+                    document.getElementById("result").innerHTML = "<p>正确答案是" + questions[currentQuestion].correctAnswer + "</p>";
+                }
+                document.getElementById("explanation").innerHTML = "<p>" + questions[currentQuestion].explanation + "</p>";
+                document.getElementById("result").style.display = "block";
+                document.getElementById("explanation").style.display = "block";
+                document.getElementById("nextBtn").style.display = "block";
+                document.getElementById("sl").style.display = "block";
+                document.getElementById("parent-container").style.display = "none";
+                document.getElementById("submit").style.display = "none";
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                document.getElementById("question").innerHTML = "<h3>问题 " + (currentQuestion + 1) + ":</h3><p>" + questions[currentQuestion].question + "</p>";
+                document.getElementById("answer").innerHTML = '<label><input type="radio" name="option" value="a" class="radio-button"> a) ' + answers[currentQuestion].a + '</label><br><label><input type="radio" name="option" value="b" class="radio-button"> b) ' + answers[currentQuestion].b + '</label><br><label><input type="radio" name="option" value="c" class="radio-button"> c) ' + answers[currentQuestion].c + '</label><br><label><input type="radio" name="option" value="d" class="radio-button"> d) ' + answers[currentQuestion].d + '</label><br><button class="next-page" style="left: 45%;top: 70%;" id="submit" onclick="checkAnswer()"><img src="img/下一步.png"></button>';
+                document.getElementById("result").style.display = "none";
+                document.getElementById("explanation").style.display = "none";
+                document.getElementById("sl").style.display = "none";
+                document.getElementById("parent-container").style.display = "block";
+                document.getElementById("nextBtn").style.display = "none";
+            } else {
+                window.location.replace("play.html");
+            }
+        }
+
+    </script>
+</body>
+
+</html>

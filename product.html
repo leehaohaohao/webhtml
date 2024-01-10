@@ -1,79 +1,397 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <style>
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-        }
-
-        .slider, .button {
-            margin: 20px;
-        }
-
-        #model {
-            width: 200px;
-            height: 200px;
-            background: url('img/瓷盘.png'); /* 这里需要替换为你的瓷器模型图片的URL */
-            transition: transform 0.1s linear;
-        }
-
-        #nextStep {
-            display: none;
-            border: 1px solid black;
-            padding: 20px;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div id="model"></div>
-        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-        <button class="button" onclick="startFiring()">开始烧窑</button>
-        <p id="progress">进度：0%</p>
-        <div id="nextStep">
-            <p>下一步的操作介绍...</p>
-            <button onclick="nextStep()">下一步</button>
-        </div>
-    </div>
-
-    <script>
-        var slider = document.getElementById("myRange");
-        var model = document.getElementById("model");
-        var progress = document.getElementById("progress");
-        var nextStep = document.getElementById("nextStep");
-        var firing = false;
-
-        slider.oninput = function() {
-            var angle = this.value * 3.6;
-            model.style.transform = 'rotate(' + angle + 'deg)';
-        }
-
-        function startFiring() {
-            firing = true;
-            progress.innerHTML = "进度：0%";
-            fire();
-        }
-
-        function fire() {
-            if (!firing) return;
-            var value = parseInt(progress.innerHTML.split('：')[1]);
-            if (value < 100) {
-                progress.innerHTML = "进度：" + (value + 1) + "%";
-                setTimeout(fire, 100);
-            } else {
-                firing = false;
-                nextStep.style.display = "block";
+    <head>
+        <title>烧窑</title>
+        <style>
+            .container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 800px;
+                flex-direction: row;
             }
-        }
 
-        function nextStep() {
-            alert("开始下一步操作！");
-        }
-    </script>
-</body>
+            body {
+                user-select: none;
+                background-image: url("img/背景图.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                min-width: 1000px;
+                min-height: 300px;
+            }
+
+            .slider,
+            .button {
+                margin: 20px;
+            }
+
+            #model {
+                width: 350px;
+                height: 350px;
+                background: url('img/未上色瓷器.png');
+                background-size: contain;
+            }
+
+            #fire {
+                display: none;
+                width: 350px;
+                height: 300px;
+                background: url('img/火焰1.png');
+                background-size: 100% 100%;
+                animation: fire 1s infinite;
+            }
+
+            @keyframes fire {
+                0% {
+                    background: url('img/火焰1.png');
+                    background-size: 100% 100%;
+                }
+
+                33% {
+                    background: url('img/火焰2.png');
+                    background-size: 100% 100%;
+                }
+
+                66% {
+                    background: url('img/火焰3.png');
+                    background-size: 100% 100%;
+                }
+            }
+
+            #nextStep {
+                position: absolute;
+                /* 设置为绝对定位 */
+                top: 50%;
+                /* 把下一步放在中间 */
+                left: 50%;
+                /* 把下一步放在中间 */
+                transform: translate(-50%, -50%);
+                /* 使下一步居中 */
+                display: none;
+                /* 初始时下一步是隐藏的 */
+                z-index: 1;
+                /* 把下一步放在其他元素上面 */
+            }
+
+            #tempRangeContainer {
+                position: absolute;
+                right: calc(20% - 10px);
+                /* 把温度条放在中间，减去10px是为了抵消温度条宽度的一半 */
+                top: 50%;
+                transform: translateY(-50%);
+                /* 使温度条垂直居中 */
+                width: 20px;
+                height: 400px;
+                /* 增加温度条的长度 */
+                background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            #tempRangeFill {
+                position: absolute;
+                top: 100%;
+                background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
+                width: 100%;
+                height: 0;
+                border-radius: 10px;
+            }
+
+            #tempDisplay {
+                position: absolute;
+                /* 设置为绝对定位 */
+                right: calc(21% - 10px);
+                /* 把温度显示放在中间，减去10px是为了抵消温度条宽度的一半 */
+                bottom: calc(50% + 200px + 20px);
+                /* 把温度显示放在温度条上方，50%是温度条距离底部的距离，200px是温度条的高度，20px是你想要的额外距离 */
+                transform: translate(50%, 50%);
+                /* 使温度显示居中 */
+            }
+
+            #sliderHandle {
+                position: absolute;
+                left: -5px;
+                width: 10px;
+                height: 20px;
+                background: black;
+                border-radius: 50%;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                top: 100%;
+            }
+
+            #progressBarContainer {
+                position: fixed;
+                bottom: 50px;
+                left: 5%;
+                right: 5%;
+                width: auto;
+                background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+                border-radius: 13px;
+                padding: 2px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #progressBar {
+                height: 20px;
+                width: 0%;
+                background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
+                border-radius: 10px;
+            }
+
+            #progressDisplay {
+                position: absolute;
+                color: white;
+            }
+
+            #startButton {
+                position: absolute;
+                /* 设置为绝对定位 */
+                bottom: calc(50px);
+                /* 把按钮放在进度条上面一点，50px是进度条距离底部的距离，60px是你想要的额外距离 */
+                left: 49%;
+                /* 把按钮放在中间 */
+                transform: translate(-50%, -50%);
+                /* 使按钮居中 */
+                background: url("img/开始烧窑.png");
+                /* 这里需要替换为你的图片的URL */
+                background-size: 100% 100%;
+                width: 300px;
+                /* 设置图片的宽度 */
+                height: 100px;
+                /* 设置图片的高度 */
+                border-radius: 15px;
+                cursor: pointer;
+                /* 把鼠标光标改为手形 */
+                transition: transform 0.3s ease;
+                /* 添加过渡效果 */
+            }
+
+            #startButton:hover {
+                transform: translate(-50%, -50%) scale(1.1);
+                /* 鼠标悬停时放大 */
+            }
+
+            #nextButton {
+                background: url("img/下一步.png");
+                /* 这里需要替换为你的图片的URL */
+                background-size: 100% 100%;
+                position: relative;
+                /* 设置为相对定位 */
+                width: 300px;
+                /* 设置图片的宽度 */
+                height: 100px;
+                /* 设置图片的高度 */
+                border-radius: 15px;
+                cursor: pointer;
+                /* 把鼠标光标改为手形 */
+                display: none;
+                /* 初始时按钮是隐藏的 */
+                transition: transform 0.3s ease;
+                /* 添加过渡效果 */
+            }
+
+            #nextButton:hover {
+                transform: scale(1.1);
+                /* 鼠标悬停时放大 */
+            }
+
+            .half {
+                position: fixed;
+                width: 50%;
+                height: 100%;
+                transition: all 2s ease-out;
+            }
+
+            .left {
+                left: 0;
+                z-index: 1;
+                background: url('img/左边窗帘.png') no-repeat;
+                background-size: 100% 100%;
+            }
+
+            .right {
+                right: 0px;
+                z-index: 1;
+                background: url('img/右边窗帘.png') no-repeat;
+                background-size: 150% 100%;
+            }
+
+            body.loaded .left {
+                transform: translateX(-100%);
+            }
+
+            body.loaded .right {
+                transform: translateX(100%);
+            }
+
+            #overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                /* 添加暗淡的效果 */
+                z-index: 9999;
+                /* 设置层级 */
+                transition: opacity 1s;
+                /* 添加过渡效果 */
+            }
+
+            #overlay img {
+                position: absolute;
+                width: 600px;
+                height: 800px;
+                border-radius: 150px;
+                top: 50%;
+                left: 50%;
+                transform: translate3d(-50%, -50%, 0);
+                  animation: slideInFromTop 2s ease-out;
+            }
+            @keyframes slideInFromTop {
+              0% {
+                transform: translate3d(-50%, -100%, 0);
+              }
+              100% {
+                transform: translate3d(-50%, -50%, 0);
+              }
+            }
+            #nextPage {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                /* 添加暗淡的效果 */
+                z-index: 9999;
+                /* 设置层级 */
+                display: none;
+                /* 初始时隐藏 */
+                opacity: 0;
+                /* 初始时完全透明 */
+
+            }
+
+            #nextPage img {
+                position: absolute;
+                border-radius: 150px;
+                width: 600px;
+                height: 800px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                cursor: pointer;
+                /* 把鼠标光标改为手形 */
+            }
+        </style>
+    </head>
+    <body>
+        <div id="overlay">
+            <img src="img/介绍版.png">
+        </div> <!-- 新增的元素 -->
+
+        <div class="half left"></div>
+        <div class="half right"></div>
+        <div class="container">
+            <div>
+                <div id="model"></div>
+                <div id="fire"></div>
+            </div>
+            <div>
+                <p id="tempDisplay">温度：0</p>
+                <div id="tempRangeContainer" onmousedown="startDrag(event)" onmousemove="drag(event)"
+                    onmouseup="stopDrag()">
+                    <div id="tempRangeFill"></div>
+                    <div id="sliderHandle"></div>
+                </div>
+                <div class="button" onclick="startFiring()" id="startButton"></div>
+            </div>
+        </div>
+        <div id="progressBarContainer">
+            <div id="progressBar"></div>
+            <p id="progressDisplay">进度：0%</p>
+        </div>
+        <div id="nextPage">
+            <img src="img/烧窑下一步.png">
+        </div> <!-- 新增的元素 -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $('#overlay').click(function() {
+                $(this).css('opacity', '0'); // 让覆盖层渐渐变为透明
+            });
+            $('#overlay').on('transitionend', function() {
+                if ($(this).css('opacity') == '0') {
+                    $(this).hide(); // 当覆盖层完全透明后，隐藏覆盖层
+                    $('body').addClass('loaded'); // 开始执行开屏动画
+                }
+            });
+            $('#nextPage img').click(function() {
+                $('#nextPage').animate({opacity: 0}, 500, function() {
+                            $(this).css('display', 'none');
+                             window.location.href = 'print.html';
+                        });
+               
+            });
+            var firing = false;
+            var dragging = false;
+            var speed = 1;
+
+            function startFiring() {
+                firing = true;
+                $('#fire').show();
+                $('#startButton').hide();
+                $('#progressDisplay').text("进度：0%");
+                fire();
+            }
+
+            function fire() {
+                if (!firing) return;
+                var value = parseInt($('#progressDisplay').text().split('：')[1]);
+                var temp = parseInt($('#tempDisplay').text().split('：')[1]);
+                if (value < 100 && temp > 0) {
+                    $('#progressDisplay').text("进度：" + (value + 1) + "%");
+                }
+                var speed = temp == 100 ? 0.8 : 0.5;
+                setTimeout(function() {
+                    fire();
+                }, 50 / speed);
+                if (value >= 100) {
+                    firing = false;
+
+                    $('#nextPage').css('display', 'block'); // 先显示下一页的链接
+                    $('#nextPage').animate({
+                        opacity: 1
+                    }, 1000); // 然后让下一页的链接渐显
+                }
+                var progress = parseInt($('#progressDisplay').text().split('：')[1]);
+                $('#progressBar').css('width', progress + '%');
+            }
+
+            function startDrag(e) {
+                if (e.target.id !== 'sliderHandle') return;
+                dragging = true;
+            }
+
+            function drag(e) {
+                if (!dragging) return;
+                var pct = Math.max(0, Math.min(1, 1 - (e.clientY - $('#tempRangeContainer').offset().top) / $(
+                    '#tempRangeContainer').height()));
+                $('#tempRangeFill').css('height', pct * 100 + '%');
+                $('#tempRangeFill').css('top', (1 - pct) * 100 + '%');
+                $('#sliderHandle').css('top', (1 - pct) * 100 + '%');
+                var temp = Math.round(pct * 2000);
+                $('#tempDisplay').text("温度：" + temp);
+                speed = temp >= 1300 ? 2 : 1;
+            }
+
+            function stopDrag() {
+                dragging = false;
+            }
+            $(document).mouseup(stopDrag);
+            $(document).mousemove(drag);
+        </script>
+    </body>
 </html>

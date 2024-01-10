@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>瓷器制作过程</title>
+        <style>
+            body {
+                background-image: url("img/制作过程背景板.png");
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                min-width: 1000px;
+                min-height: 300px;
+            }
+
+            .container {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                height: 710px;
+                padding: 50px;
+            }
+
+            .box {
+                width: 100px;
+                height: 300px;
+                margin: 10px;
+                position: relative;
+                overflow: hidden;
+                transition: width 0.5s;
+                border-radius: 15px;
+                animation: slide-in 2s ease-out forwards;
+                /* 添加这一行 */
+            }
+
+            .box1 {
+                background: url('img/选料.png');
+            }
+
+            .box2 {
+                background: url('img/拉胚.png');
+            }
+
+            .box3 {
+                background: url('img/利胚.png');
+            }
+
+            .box4 {
+                background: url('img/晒胚.png');
+            }
+
+            .box5 {
+                background: url('img/施釉.png');
+            }
+
+            .box6 {
+                background: url('img/六烧窑.png');
+            }
+
+            .box:hover {
+                width: 400px;
+            }
+
+            .panel {
+                position: absolute;
+                right: 0;
+                width: 300px;
+                height: 100%;
+                background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%);
+                transform: translateX(100%);
+                transition: transform 0.5s;
+                border-radius: 15px;
+                display: flex;
+                /* 新增 */
+                justify-content: center;
+                /* 新增 */
+                align-items: center;
+                /* 新增 */
+            }
+
+            .box:hover .panel {
+                transform: translateX(0);
+            }
+
+            .side-image {
+                position: fixed;
+                top: 50%;
+                width: 150px;
+                height: 280px;
+                transform: translateY(-50%);
+                background-size: 100% 100%;
+                animation: slide-in 1.5s ease-out forwards;
+            }
+
+            .left {
+                left: -150px;
+                background-image: url("img/left.png");
+                animation-name: slide-in-left;
+            }
+
+            .right {
+                right: -150px;
+                background-image: url("img/right.png");
+                animation-name: slide-in-right;
+            }
+
+            @keyframes slide-in-left {
+                0% {
+                    left: -150px;
+                }
+
+                50% {
+                    left: 0;
+                }
+
+                75% {
+                    left: -50px;
+                }
+
+                100% {
+                    left: 0;
+                }
+            }
+
+            @keyframes slide-in-right {
+                0% {
+                    right: -150px;
+                }
+
+                50% {
+                    right: 0;
+                }
+
+                75% {
+                    right: -50px;
+                }
+
+                100% {
+                    right: 0;
+                }
+            }
+
+            /* 新添加的代码 */
+            @keyframes slide-in {
+                0% {
+                    transform: translateX(-100%);
+                }
+
+                100% {
+                    transform: translateX(0);
+                }
+            }
+
+            .panel p {
+                padding: 20px;
+                font-size: 20px;
+                /* 调整字体大小 */
+                color: #333;
+                text-align: center;
+                /* 让文字居中显示 */
+            }
+
+            #arrows {
+                position: fixed;
+                right: 100px;
+                bottom: 50px;
+                transition: transform 0.3s;
+                /* 添加过渡效果 */
+            }
+
+            #arrows:hover {
+                transform: scale(1.2);
+                /* 鼠标悬停时放大 */
+            }
+
+            .arrow {
+                opacity: 0;
+                width: 50px;
+                /* 设置箭头图标的大小 */
+                height: 50px;
+                /* 设置箭头图标的大小 */
+            }
+
+            @keyframes arrowFadeIn {
+                0% {
+                    opacity: 0;
+                }
+
+                100% {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes arrowFadeOut {
+                0% {
+                    opacity: 1;
+                }
+
+                100% {
+                    opacity: 0;
+                }
+            }
+            #nextPage {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                /* 添加暗淡的效果 */
+                z-index: 9999;
+                /* 设置层级 */
+                display: none;
+                /* 初始时隐藏 */
+                opacity: 0;
+                /* 初始时完全透明 */
+            
+            }
+            
+            #nextPage img {
+                position: absolute;
+                border-radius: 150px;
+                width: 600px;
+                height: 800px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                cursor: pointer;
+                /* 把鼠标光标改为手形 */
+            }
+            .petal {
+                position: fixed;
+                top: -40px;
+                
+                width: 30px;
+                height: 30px;
+                background-image: url("img/花瓣.png");
+                background-size: cover;
+                animation: fall linear infinite;
+            }
+            
+            @keyframes fall {
+                0% {
+                    transform: translateX(calc(100vw * Math.random())) translateY(-10%);
+                }
+                100% {
+                    transform: translateX(calc(100vw * Math.random())) translateY(110%);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="arrows">
+            <img class="arrow" src="img/箭头.png">
+            <img class="arrow" src="img/箭头.png">
+            <img class="arrow" src="img/箭头.png">
+            <img class="arrow" src="img/箭头.png">
+            <img class="arrow" src="img/箭头.png">
+            <img class="arrow" src="img/箭头.png">
+        </div>
+        <div class="container">
+            <div class="box box1">
+                <div class="panel">
+                    <p>选土是制作瓷器的第一步，包括选土，研磨，过滤，配料，湿土，练泥等工序。</p>
+                </div>
+            </div>
+            <div class="box box2">
+                <div class="panel">
+                    <p>拉坯是制作陶瓷的七十二道工序之一，也叫做坯，是成型的最初阶段，也是器物的雏形制作。 它是将制备好的泥料放在坯车上，用轮制成型方法制成具有一定形状和尺寸的坯件。</p>
+                </div>
+            </div>
+            <div class="box box3">
+                <div class="panel">
+                    <p>利胚，即用刀为刚成型的瓷器修薄的过程，是制作薄胎瓷的重要一环。利坯,也称“修坯”或“旋坯”，是最后确定器物形状的关键环节，并使器物表面光洁、形体连贯、规整一致。</p>
+                </div>
+            </div>
+            <div class="box box4">
+                <div class="panel">
+                    <p>晒坯是自然干燥的程序之一，将加工成型后的湿坯置于坯板上，再放到露天坯架上进行晾晒。</p>
+                </div>
+            </div>
+            <div class="box box5">
+                <div class="panel">
+                    <p>施釉工艺是古陶瓷器制作工艺技术的一种，是指在成型的陶瓷坯体表面施以釉浆的过程。 其方法有蘸釉、荡釉、浇釉、刷釉、吹釉、喷釉、轮釉等多种。</p>
+                </div>
+            </div>
+            <div class="box box6">
+                <div class="panel">
+                    <p>烧窑是“土变黄金”的过程，也是钧瓷生产的一道关键工序。早期把陶瓷制品装入匣钵（匣钵是以耐火材料制成的用于陶瓷制品焙烧的容器,防止瓷坯被窑火污染），再放入窑中进行烧制。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="side-image left"></div>
+        <div class="side-image right"></div>
+        <div id="nextPage">
+            <img src="img/制作.png">
+        </div> 
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+                var petals = [];
+                var petalCount = 0;
+        
+                function createPetal() {
+                    if (petals.length >= 100) {
+                        var removedPetal = petals.shift();
+                        document.body.removeChild(removedPetal);
+                    }
+        
+                    var petal = document.createElement('div');
+                    petal.className = 'petal';
+                    petal.style.left = Math.random() * window.innerWidth + 'px';
+                    petal.id = 'petal' + petalCount++;
+                    document.body.appendChild(petal);
+                    petals.push(petal);
+        
+                    fallPetal(petal);
+                }
+        
+                function fallPetal(petal) {
+                    var speed = 2 + Math.random() * 5;
+                    var rotateSpeed = 2; // 随机选择旋转方向
+                    var fallingInterval = setInterval(function() {
+                        petal.style.top = petal.offsetTop + 1 + 'px';
+                        petal.style.transform = 'rotate(' + petal.offsetTop * rotateSpeed + 'deg)';
+                        if (petal.offsetTop >= 2000) {
+                            clearInterval(fallingInterval);
+                        }
+                    }, speed);
+                }
+        
+                setInterval(createPetal, 500);
+            $(document).ready(function() {
+                $('#arrows').click(function() {
+                    $('#nextPage').css('display', 'block').animate({opacity: 1}, 500);
+                });
+                $('#nextPage img').click(function() {
+                    $('#nextPage').animate({opacity: 0}, 500, function() {
+                        $(this).css('display', 'none');
+                        window.location.href = 'product.html';
+                    });
+               
+                });
+            });
+
+        $(document).ready(function() {
+            var arrows = $('.arrow');
+            var delay = 0.8; // 每个箭头亮起的间隔时间
+            var fadeOutDuration = 1; // 所有箭头一起熄灭的持续时间
+
+            arrows.each(function(index) {
+                $(this).css('animation', 'arrowFadeIn ' + delay + 's ' + index * delay + 's forwards');
+            });
+
+            setInterval(function() {
+                arrows.css('animation', '');
+                setTimeout(function() {
+                    arrows.each(function(index) {
+                        $(this).css('animation', 'arrowFadeIn ' + delay + 's ' + index *
+                            delay + 's forwards');
+                    });
+                }, fadeOutDuration * 1000);
+            }, (arrows.length + fadeOutDuration) * delay * 1000);
+        });
+    </script>
+</html>
